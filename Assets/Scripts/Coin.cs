@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private int _value;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int Value { get { return _value; } private set { } }
 }

@@ -4,13 +4,11 @@ using UnityEngine;
 using TMPro;
 
 public class Player : MonoBehaviour
-{
-    [SerializeField] private TMP_Text _textMoney;
+{    
     [SerializeField] private ParticleSystem _particleWalk;
     [SerializeField] private Joystick _joystick;
     [SerializeField] private float _speed;
-    [SerializeField] private int _health;
-    [SerializeField] private int _money;
+    [SerializeField] private Wallet _wallet;
 
     private Rigidbody _rigidbody;
     private AudioSource _source;
@@ -23,9 +21,9 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out Coin coin))
+        if(other.TryGetComponent<Coin>(out Coin coin))
         {
-            _money += 5;
+            _wallet.AddMoney(coin.Value);
             Destroy(coin.gameObject);
         }
     }
@@ -45,25 +43,5 @@ public class Player : MonoBehaviour
             _source.Stop();
             _particleWalk.Stop();
         }
-
-        _textMoney.text = _money.ToString();
-    }
-
-    private void AddMoney(int money)
-    {
-        _money += money;
-    }
-
-    private void ApplyDamage(int damage)
-    {
-        _health -= damage;
-
-        if (_health < 1)
-            Dead();
-    }
-
-    private void Dead()
-    {
-        print("Помер");
     }
 }
